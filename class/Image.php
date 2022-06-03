@@ -111,7 +111,7 @@ class Image
             'title' => null,
             'description' => null,
             'filename' => null
-          ]
+          ];
         }
         $image_data['id'] = $row['id'];
         $image_data['title'] = $row['title'];
