@@ -7,9 +7,10 @@ $images = $image->getImages(IMAGE_DIR_PATH);
 
  ?>
 
+ <article class = "afichage_contenu">
 
    <h1> <?php echo WEB_TITLE ?> index du SITE </h1>
-
+    <ul>
      <?php foreach ($images as $image) : ?>
      <li>
        <img src=" <?php echo IMAGE_DIR_URL. $image ['filename'] ?>" />
@@ -24,6 +25,9 @@ $images = $image->getImages(IMAGE_DIR_PATH);
 
     <?php endforeach ?>
     </ul>
+
+ </article>
+
 
   </body>
   </html>

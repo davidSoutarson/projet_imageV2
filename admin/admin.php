@@ -9,6 +9,8 @@ require('menu.php');
 $image = new Image();
 $images = $image->getImages(IMAGE_DIR_PATH);
 ?>
+<article class = "afichage_contenu">
+
 <h1>  Admin </h1>
 
 <p> vous pouver modifier les Titre et et les Description </p>
@@ -39,13 +41,4 @@ $images = $image->getImages(IMAGE_DIR_PATH);
   <?php endforeach ?>
 </ul>
 
-
-<!-- <?php
-// echo "test cours fig 17 page 11 chapitre 2 <br>
-// ecri le tablau constante utiliser <br>
-// se test sera suprimer par la suis ";
-//
-// $contants = get_defined_constants(true);
-// var_dump($contants['user']);
-
-?> -->
+</article>

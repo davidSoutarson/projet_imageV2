@@ -1,0 +1,39 @@
+*{
+  margin: 0;
+  padding: 0.5em;
+    list-style-type: none;
+}
+body{
+  /*margin: 0 auto;*/
+  display: flex;
+  flex-direction: row-reverse;
+  
+}
+
+.menu{
+  background-color: rgba(155, 155, 155, 0.5);
+  width: 250px;
+  height: 250px;
+}
+
+.menu ul{
+  background-color: rgba(100, 100, 100, 0.5);
+  list-style-type: none;
+  text-align: center;
+}
+
+.menu ul li{
+  border:2px solid rgba(255,255,255,1);
+  height: 30px;
+}
+
+.menu ul li a{
+  color: rgba(0,0,0,1);
+  text-decoration: none;
+}
+
+.afichage_contenu{
+  margin: 0 auto;
+  background-color: rgba(200,200, 200, 0.1);
+
+}

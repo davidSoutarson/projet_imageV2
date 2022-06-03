@@ -104,6 +104,15 @@ class Image
       }
       else {
         $row = $result->fetch_array();
+        if (is_null($row)
+        {
+          $row = [
+            'id' => null,
+            'title' => null,
+            'description' => null,
+            'filename' => null
+          ]
+        }
         $image_data['id'] = $row['id'];
         $image_data['title'] = $row['title'];
         $image_data['description'] = $row['description'];
@@ -157,7 +166,11 @@ class Image
           {
             $tmp_name = $files ['upload']['tmp_name'][$key];
             $name = $files ['upload']['name'][$key];
-            if(move_uploaded_file($tmp_name, $upload_dir . $name) == false)$error++ ;
+            if(move_uploaded_file($tmp_name, $upload_dir . $name) == false)
+            {
+              $error++ ;
+            }
+
           }
           else
           {
@@ -177,11 +190,72 @@ class Image
       {
         return false;
       }
+
+
+
+
     }
 
+/*------------------------------------------------------------------------------*/
+    public function creatThumbnail ($filename)
+    {
+      //1. définition des chemins des images et des vignettes
+      $image = IMAGE_DIR_PAHT . $filename;
+      $vignette = THUMB_DIR_PHAT . $filename;
 
+      //2.récuperation des dimention de l'image source
+      $size = getimagesize($image) ;
+      $largeur = $size[0];
+      $hauteur = $size[1];
 
+      //3. définition des valeurs souhaitées pour les vignettes
+      //ce sont des valeurs maximales
+      $largeur_max = 200;
+      $hauteur_max = 200;
 
+      //4. création de l'image source avec imagecreatefromjpeg
+      $image_scr = imagecreatefromjpeg($image);
+
+      //3. On crée un ratio (une proportion)
+      // et on verifie que l'image source ne soit pas
+      //plus petite que l'image de destination
+
+      if ($largeur >$largeur_max OR $hauteur > $hauteur_max)
+      {
+        if ($hauteur <= $largeur ) //si la largeur plus grande que la hauteur
+        {
+          $ratio = $largeur_max / $largeur;
+        }
+        else
+        {
+          $ratio = $hauteur_max / $hauteur;
+        }
+      }
+      else
+      {
+        $ratio = 1; //l'image créer sera identique a loriginale
+      }
+
+      //4. création de limage noire de déstination avec dimention souhaitées
+      $image_destination = imagecreatetruecolor(round($largeur * $ratio),
+      round($hauter * $ratio));
+      //5. fabrication de la vignette avec dimention souhaitées
+      imacopyresampled($image_destination, $image_src, 0,0,0,0,
+      round($largeur * $ratio), round($hauter * $ratio), $largeur, $hauteur);
+
+      //6. Envoi de la nouvelle image JPEG dans le fichier
+      if (!imagejpeg($image_destination, $vignette))
+      {
+        $error_msg = 'la creation de la vignette a echouée pour l\'image'.
+        $image;
+        return $error_msg;
+      }
+      else
+      {
+        return false;
+      }
+
+    } // fin de la méthode createThumbnail :
 
   }
   ?>

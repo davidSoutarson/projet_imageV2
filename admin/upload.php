@@ -21,9 +21,9 @@ if (!empty($_FILES))
 
  ?>
 
+<article class = "afichage_contenu" id= "upload">
+
 <h1>Upload</h1>
-
-
 
 <?php if(isset($msg_succes)):?>
 <p class = "msg_success" ><?php echo $msg_succes ?> </p>
@@ -38,6 +38,4 @@ if (!empty($_FILES))
   <input id= "uploadFormSubmit" name="uploadFormSubmit" type="submit">
 </form>
 
-
-</body>
-</html>
+</article>
