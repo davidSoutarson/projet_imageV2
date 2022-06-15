@@ -39,3 +39,30 @@ if (!empty($_FILES))
 </form>
 
 </article>
+<?php
+$image = new Image();
+$images = $image->getImages(IMAGE_DIR_PATH);
+
+ ?>
+
+<article class = "afichage_contenu">
+
+  <h1> admin upload </h1>
+   <ul>
+    <?php foreach ($images as $image) : ?>
+    <li>
+
+      <img src=" <?php echo THUMB_DIR_URL. $image ['filename'] ?>" /> <!--miniature créer-->
+    <!-- cette modification daficher les modification  faite par un administrateur
+    la POO rend posible cette modife
+    Finalisation : ajout des informations sur la page  de contenu front
+    page 11 fig 14
+     -->
+      <p><?php echo $image['title'] ?> </p>
+      <p> <?php echo $image['description'] ?></p>
+    </li>
+
+   <?php endforeach ?>
+   </ul>
+
+</article>

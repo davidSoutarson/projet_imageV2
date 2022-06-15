@@ -6,6 +6,6 @@ define ('IMAGE_DIR_PATH', $_SERVER['DOCUMENT_ROOT'] .'/'. WEB_DIR_NAME .'/'. IMA
 define ('IMAGE_DIR_URL', 'http://'. $_SERVER['HTTP_HOST'] .'/'. WEB_DIR_NAME .'/'. IMAGE_DIR_NAME .'/' );
 define ('WEB_DIR_URL','http://'.$_SERVER['HTTP_HOST'] .'/'. WEB_DIR_NAME .'/');
 
-define('IMAGE_THUMB_NAME', 'thumbnails');
-define('IMAGE_THUMB_PATH', $_SERVER['DOCUMENT_ROOT'] .'/'. WEB_DIR_NAME .'/'. IMAGE_DIR_NAME .'/'. IMAGE_THUMB_NAME .'/');
-define('IMAGE_THUMB_URL','http://'. $_SERVER['HTTP_HOST'] .'/'. WEB_DIR_NAME .'/'. IMAGE_DIR_NAME .'/'. IMAGE_THUMB_NAME .'/');
+define('THUMB_DIR_NAME', 'thumbnails');
+define('THUMB_DIR_PATH', $_SERVER['DOCUMENT_ROOT'] .'/'. WEB_DIR_NAME .'/'. IMAGE_DIR_NAME .'/'. THUMB_DIR_NAME .'/');
+define('THUMB_DIR_URL','http://'. $_SERVER['HTTP_HOST'] .'/'. WEB_DIR_NAME .'/'. IMAGE_DIR_NAME .'/'. THUMB_DIR_NAME .'/');

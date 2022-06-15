@@ -104,8 +104,8 @@ class Image
       }
       else {
         $row = $result->fetch_array();
-        if (is_null($row)
-        {
+//autorise le fait que limage ne soit pas rensegner
+        if (is_null($row)) {
           $row = [
             'id' => null,
             'title' => null,
@@ -118,6 +118,7 @@ class Image
         $image_data['description'] = $row['description'];
         $image_data['filename'] = $row['filename'];
         return $image_data;
+
       }
       $mysqli->close ();
     }
@@ -165,10 +166,14 @@ class Image
           if ($error == UPLOAD_ERR_OK)
           {
             $tmp_name = $files ['upload']['tmp_name'][$key];
-            $name = $files ['upload']['name'][$key];
-            if(move_uploaded_file($tmp_name, $upload_dir . $name) == false)
+            $filename = $files ['upload']['name'][$key];
+            if(move_uploaded_file($tmp_name, $upload_dir . $filename) == false)
             {
               $error++ ;
+            }
+            else {
+              //
+              $this -> createThumbnail($filename);
             }
 
           }
@@ -197,11 +202,11 @@ class Image
     }
 
 /*------------------------------------------------------------------------------*/
-    public function creatThumbnail ($filename)
+    public function createThumbnail ($filename)
     {
       //1. définition des chemins des images et des vignettes
-      $image = IMAGE_DIR_PAHT . $filename;
-      $vignette = THUMB_DIR_PHAT . $filename;
+      $image = IMAGE_DIR_PATH . $filename;
+      $vignette = THUMB_DIR_PATH . $filename;
 
       //2.récuperation des dimention de l'image source
       $size = getimagesize($image) ;
@@ -214,7 +219,7 @@ class Image
       $hauteur_max = 200;
 
       //4. création de l'image source avec imagecreatefromjpeg
-      $image_scr = imagecreatefromjpeg($image);
+      $image_src = imagecreatefromjpeg($image);
 
       //3. On crée un ratio (une proportion)
       // et on verifie que l'image source ne soit pas
@@ -237,11 +242,9 @@ class Image
       }
 
       //4. création de limage noire de déstination avec dimention souhaitées
-      $image_destination = imagecreatetruecolor(round($largeur * $ratio),
-      round($hauter * $ratio));
+      $image_destination = imagecreatetruecolor(round($largeur * $ratio), round($hauteur * $ratio));
       //5. fabrication de la vignette avec dimention souhaitées
-      imacopyresampled($image_destination, $image_src, 0,0,0,0,
-      round($largeur * $ratio), round($hauter * $ratio), $largeur, $hauteur);
+      imagecopyresampled($image_destination, $image_src, 0,0,0,0, round($largeur * $ratio), round($hauteur * $ratio), $largeur, $hauteur);
 
       //6. Envoi de la nouvelle image JPEG dans le fichier
       if (!imagejpeg($image_destination, $vignette))
@@ -256,6 +259,28 @@ class Image
       }
 
     } // fin de la méthode createThumbnail :
+
+    //Les noms de fichiers images devront donc tous être du type :
+    //projet_image_nom_fichier.jpg, le tout en bas de casse (lettre minuscule).
+
+    // public function cleantex ($filename)
+    // {
+    //   $special = array('','\'','á','à','â','ä','ã','ç','é','è','ê','ë',
+    //                   'í','ì','î','ï','ñ','ó','ò','ô','ö','õ',
+    //                   'ú','ù','û','ü','ý','ÿ','Á','À','	Â','Ã','Ç',
+    //                   'É','È','Ê','Ë','Í','Ì','Î','Ï','Ñ','Ó','Ò',
+    //                   'Ô','Ö','Õ','Ú','	Ù','Û','Ü','Ý');
+    //
+    //   $normale = array('_','','a','a','a','a','a','c','e','e','e','e',
+    //                   'i','i','i','i','n','o','o','o','o','o',
+    //                   'u','u','u','u','y','y','A','A','A','A','C',
+    //                   'E','E','E','E','I','I','I','I','N','O','O',
+    //                   'O','O','O','U','U','U','U','Y');
+    //
+    //   $result = str_replace($special,$normal,"c'áàâäã'çéèêëíìîïñóòôöõúùûüýÿÁÀÂÃÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝ")
+    //
+    // }
+
 
   }
   ?>

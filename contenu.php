@@ -4,7 +4,8 @@ require('menu.php');
 $image = new Image();
 $images = $image->getImages(IMAGE_DIR_PATH);
 
-
+$constant = get_defined_constants(true);
+var_dump($constant['user']);
  ?>
 
  <article class = "afichage_contenu">
@@ -14,6 +15,7 @@ $images = $image->getImages(IMAGE_DIR_PATH);
      <?php foreach ($images as $image) : ?>
      <li>
        <img src=" <?php echo IMAGE_DIR_URL. $image ['filename'] ?>" />
+       <img src=" <?php echo THUMB_DIR_URL. $image ['filename'] ?>" /> <!--miniature créer-->
      <!-- cette modification daficher les modification  faite par un administrateur
      la POO rend posible cette modife
      Finalisation : ajout des informations sur la page  de contenu front
